@@ -12,13 +12,13 @@ class Animal {
     }
 }
 
-abstract class Person<T> {
+class Person<T> {
     name: string;
     id: number = 0;
     constructor(name: string) {
         this.name = name
     }
-    speak(){}
+    speak(){ console.log(`${this.name} has spoken`); }
 }
 
 interface Employee<T> extends Person<T>, Animal {    
@@ -33,7 +33,7 @@ abstract class WarehouseEmployee<T> {
     }
 }
 
-@Mixins.tmixin(Animal)
+@Mixins.tmixin(Animal, Person)
 class Employee<T> extends WarehouseEmployee<T> {  
     constructor(name: string) {
         super('E');
@@ -52,4 +52,5 @@ class Chase extends Employee<string> {
 
 const x = new Chase();
 x.eat(); // Animal has eaten
+x.speak(); // Chase has spoken
 console.log(x); // Chase { building: 'E', id: 22, name: 'Chase' }

@@ -1,3 +1,18 @@
+/*
+___________________________________________________________________________________________________________________________
+================
+    ts-mixin
+================
+
+A Module for easily implementing typed mixin classes in TypeScript
+
+~ Chase M. Allen
+Updated: 12-2020
+___________________________________________________________________________________________________________________________
+*/
+
+
+
 export { };
 
 declare global {
@@ -88,7 +103,7 @@ declare global {
          * ``` typescript
          * abstract class A<T> {}
          * 
-         * tmixin(false, A as new () => A<never>)
+         * ＠tmixin(A as new () => A<never>)
          * class AA {}
          * ```
         */
@@ -111,7 +126,7 @@ declare global {
          * ``` typescript
          * abstract class A<T> {}
          * 
-         * tmixin(false, A as new () => A<never>)
+         * ＠tmixin(false, A as new () => A<never>)
          * class AA {}
          * ```
         */

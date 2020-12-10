@@ -8,7 +8,8 @@
     "build:m": "cd ../mixin && npm run build && cd ../tests",
     "build:mp": "cd ../mixin && npm run build:npm && cd ../tests",
     "dev:test1": "npm run build && SET \"NODE_ENV=dev\" && node ./dist/test1.js",
-    "dev:test2": "npm run build && SET \"NODE_ENV=dev\" && node ./dist/test2.js"
+    "dev:test2": "npm run build && SET \"NODE_ENV=dev\" && node ./dist/test2.js",
+    "dev:test3": "npm run build && SET \"NODE_ENV=dev\" && node ./dist/test3.js"
   },
   "author": "",
   "license": "ISC",

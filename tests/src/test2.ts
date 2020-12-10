@@ -116,7 +116,7 @@ type _ = typeof __;
  */
 abstract class BoilerPlateCtor { 
     /**
-     * @param page Reference to the Page in use
+     * @param item Reference to the Page in use
      * @param manuScriptFactory The static IScriptPage class that can create a new instance
      * of the defined generic ScriptPageBase Type
      */
@@ -126,14 +126,14 @@ abstract class BoilerPlateCtor {
 interface IManuScriptPageBoilerPlateInterface { __ReferenceItem: ReferenceItem; _ManuScriptFactory: IScriptPage; }
 
 type PageImplementation<T extends StandardInteractor> = PageImplementationCtor & T;
-interface PageImplementationCtor { new (page: ReferenceItem, manuScriptFactory: IScriptPage); }
+interface PageImplementationCtor { new (item: ReferenceItem, manuScriptFactory: IScriptPage); }
 
 /** A class decorator that will perform the boilerplate constructor logic to mixin a ManuScript
  * implementation along with an Interactor class. Enforces that the decorated class' contract
  * implements the StandardInteractor inheritance.
  */
-const InheritInteractor = <T extends StandardInteractor>(type: new (page: ReferenceItem) => T) => {
-    return (<U extends T>(orig: new (page: ReferenceItem, manuScriptFactory: IScriptPage) => BoilerPlateCtor & U) => {
+const InheritInteractor = <T extends StandardInteractor>(type: new (item: ReferenceItem) => T) => {
+    return (<U extends T>(orig: new (item: ReferenceItem, manuScriptFactory: IScriptPage) => BoilerPlateCtor & U) => {
         return class extends (type as new (item: ReferenceItem) => any) implements IManuScriptPageBoilerPlateInterface {
             __ReferenceItem: ReferenceItem;
             _ManuScriptFactory: IScriptPage;
@@ -231,7 +231,7 @@ export interface AbstractManuScriptPageInteractor<T extends ScriptPageBase> exte
 // ++ Types of ManuScript Page Implementations
 //-----------------------------------------------------------------------------------------------
 
-//@WestWorld.staticImplements<IManuScriptPage>(IScriptPage)
+//@WestWorld.staticImplements<IScriptPage>(IScriptPage)
 export class MsPageSomethingSpecific extends ScriptPageBase {
 
     public static ManuScriptTopic: string = 'someConst';

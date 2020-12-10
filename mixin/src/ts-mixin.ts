@@ -1,6 +1,9 @@
-  
 /*
 ___________________________________________________________________________________________________________________________
+================
+    ts-mixin
+================
+
 A Module for easily implementing typed mixin classes in TypeScript
 
 ~ Chase M. Allen
@@ -230,7 +233,7 @@ namespace Mixins { //Begin Namespace
      * ``` typescript
      * abstract class A<T> {}
      * 
-     * tmixin(false, A as new () => A<never>)
+     * ＠tmixin(A as new () => A<never>)
      * class AA {}
      * ```
     */
@@ -250,7 +253,7 @@ namespace Mixins { //Begin Namespace
      * ``` typescript
      * abstract class A<T> {}
      * 
-     * tmixin(false, A as new () => A<never>)
+     * ＠tmixin(false, A as new () => A<never>)
      * class AA {}
      * ```
     */
@@ -270,7 +273,7 @@ namespace Mixins { //Begin Namespace
      * ``` typescript
      * abstract class A<T> {}
      * 
-     * tmixin(false, A as new () => A<never>)
+     * ＠tmixin(false, A as new () => A<never>)
      * class AA {}
      * ```
     */
