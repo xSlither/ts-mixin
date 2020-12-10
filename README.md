@@ -1,6 +1,6 @@
 # ts-mixin
 
-*A Module for easily implementing typed mixin classes in TypeScript*
+*A Module for simplifying strictly-typed multiple inheritance within TypeScript*
 
 ## Installing
 
