@@ -15,15 +15,17 @@
   "keywords": [
     "typescript",
     "mixin",
-    "classes",
-    "decorators"
+    "mixins",
+    "inheritance",
+    "decorators",
+    "tmixin"
   ],
   "author": "Chase M. Allen",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/xSlither/ts-mixin/issues"
   },
-  "homepage": "https://github.com/xSlither/ts-mixin",
+  "homepage": "https://xslither.github.io/ts-mixin/",
   "devDependencies": {
     "@types/node": "^14.14.12",
     "reflect-metadata": "^0.1.13"
