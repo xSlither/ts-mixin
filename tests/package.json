@@ -1,0 +1,19 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "powershell -ExecutionPolicy Bypass -File %TSC_DIR%",
+    "build:m": "cd ../mixin && npm run build && cd ../tests",
+    "build:mp": "cd ../mixin && npm run build:npm && cd ../tests",
+    "dev:test1": "npm run build && SET \"NODE_ENV=dev\" && node ./dist/test1.js",
+    "dev:test2": "npm run build && SET \"NODE_ENV=dev\" && node ./dist/test2.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "ts-mixin": "../mixin/build"
+  }
+}

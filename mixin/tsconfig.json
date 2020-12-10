@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "CommonJS",
+        "allowJs": true,
+        "checkJs": false,
+        "outDir": "./dist",
+        "skipLibCheck": true,
+
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "alwaysStrict": false,
+
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+
+        "moduleResolution": "Node",
+        "lib": ["ES2018", "DOM"]
+    },
+
+    "exclude": [
+        "node_modules",
+        "src/index.d.ts"
+    ],
+
+    "include": [
+        "src/**/*.ts",
+    ]
+}
