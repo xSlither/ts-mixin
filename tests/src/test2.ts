@@ -158,7 +158,7 @@ const InheritInteractor = <T extends StandardInteractor>(type: new (page: Refere
 /** Public Interface for IManuScriptPageMapping mixin */
 interface ManuScriptPageMapping<T extends ScriptPageBase> extends IManuScriptPageWrapper<T>, IQueryablePage {}
 
-abstract class IManuScriptPageMapping<T extends ScriptPageBase> 
+abstract class IManuScriptPageMapping<T extends ScriptPageBase>
 implements IManuScriptPageWrapper<T>, IQueryablePage, IManuScriptPageBoilerPlateInterface {
 
     private _ManuScriptPage: T;

@@ -178,16 +178,18 @@ namespace Mixins { //Begin Namespace
 
 
     const mixin_all = (...baseClasses: any[]) => {
+        const newArr: Function[] = [];
         baseClasses.forEach( (val) => { 
-            let chain = getProtoTypeChain(val);
+            const chain = getProtoTypeChain(val);
             chain.forEach( (val: Function) => {
-                let name = val.name.trim();
-                if (name != '') { baseClasses.push(val); }
+                const name = val.name.trim();
+                if (name != '') { newArr.push(val); }
             });
         });
 
+        newArr.push(...baseClasses);
         return ((constructor: Constructor<unknown>) => {
-            __applyMixins__(constructor, baseClasses);
+            __applyMixins__(constructor, newArr);
         });
     };
 
@@ -233,18 +235,19 @@ namespace Mixins { //Begin Namespace
     <T extends _ctor_ = _, U extends _ctor_  = _, V extends _ctor_  = _, 
     W extends _ctor_  = _, X extends _ctor_  = _, Y extends _ctor_  = _, Z extends _ctor_  = _>
     (...baseClasses: MixinArgs<T, U, V, W, X, Y, Z>) => {
-        let args = baseClasses as MixinArgsParsed<T, U, V, W, X, Y, Z, typeof baseClasses>;
-        let newArr: Function[] = [];
+        const args = baseClasses as MixinArgsParsed<T, U, V, W, X, Y, Z, typeof baseClasses>;
+        const newArr: Function[] = [];
 
-        args.forEach( (val: Function) => {
-            if (val === undefined) { return; }
-            let chain = getProtoTypeChain(val);
-            chain.forEach( (val: Function) => {
-                let name = val.name.trim();
-                if (name != '') { newArr.push(val); }
+        args.forEach( (child: Function) => {
+            if (child === undefined) { return; }
+            const chain = getProtoTypeChain(child);
+            chain.forEach( (base: Function) => {
+                const name = base.name.trim();
+                if (name != '') { newArr.push(base); }
             });
         });
 
+        newArr.push(...args);
         return (<J extends MixinParsedArgsKeys<T, U, V, W, X, Y, Z>>(constructor: J) => {
             __applyMixins__(constructor, newArr);
         });
