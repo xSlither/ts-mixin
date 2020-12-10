@@ -33,7 +33,7 @@ abstract class WarehouseEmployee<T> {
     }
 }
 
-@Mixins.tmixin(false, Animal)
+@Mixins.tmixin(Animal)
 class Employee<T> extends WarehouseEmployee<T> {  
     constructor(name: string) {
         super('E');
@@ -50,6 +50,6 @@ class Chase extends Employee<string> {
 }
 
 
-let x = new Chase();
-x.eat();
-console.log(x);
+const x = new Chase();
+x.eat(); // Animal has eaten
+console.log(x); // Chase { building: 'E', id: 22, name: 'Chase' }

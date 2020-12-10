@@ -209,19 +209,17 @@ const _IManuScriptPageMapping_ = <unknown>IManuScriptPageMapping as new (...args
 // ++ Types of ManuScript Page Wrappers for different Page Abstractions
 //-----------------------------------------------------------------------------------------------
 
-@Mixins.tmixin(false, _IManuScriptPageMapping_)
+@Mixins.tmixin(_IManuScriptPageMapping_)
 @InheritInteractor(TabbedInteractor)
 export class TabbedManuScriptPageInteractor<T extends ScriptPageBase> extends BoilerPlateCtor {}
 export interface TabbedManuScriptPageInteractor<T extends ScriptPageBase> extends ManuScriptPageMapping<T>, TabbedInteractor {}
 
-
-@Mixins.tmixin(false, _IManuScriptPageMapping_)
+@Mixins.tmixin(_IManuScriptPageMapping_)
 @InheritInteractor(SpecialTabbedInteractor)
 export class SpecialTabbedManuScriptPageInteractor<T extends ScriptPageBase> extends BoilerPlateCtor {}
 export interface SpecialTabbedManuScriptPageInteractor<T extends ScriptPageBase> extends ManuScriptPageMapping<T>, SpecialTabbedInteractor {}
 
-
-@Mixins.tmixin(false, _IManuScriptPageMapping_)
+@Mixins.tmixin(_IManuScriptPageMapping_)
 @InheritInteractor(AbstractInteractor)
 export class AbstractManuScriptPageInteractor<T extends ScriptPageBase> extends BoilerPlateCtor {}
 export interface AbstractManuScriptPageInteractor<T extends ScriptPageBase> extends ManuScriptPageMapping<T>, AbstractInteractor {}

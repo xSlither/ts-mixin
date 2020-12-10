@@ -34,6 +34,7 @@ declare global {
             : t7<cc<T>, cc<U>, cc<V>, cc<W>, cc<X>, cc<Y>, cc<Z>>
         : [...R];
     
+        type MixinSingleArg<T> = cc<T>;
         type MixinArgs<T, U, V, W, X, Y, Z> = c<cc<T>, cc<U>, cc<V>, cc<W>, cc<X>, cc<Y>, cc<Z>>;
         type MixinArgsParsed<T, U, V, W, X, Y, Z, R extends MixinArgs<T, U, V, W, X, Y, Z>> 
             = d<T, U, V, W, X, Y, Z, R, R['length']>;
@@ -60,13 +61,44 @@ declare global {
          * Applies the variadic set of base classes to the decorated class
          * 
          * (Does not enforce any contracts for implementing the provided base classes. See 'tmixin' for type support)
+         * @param baseClasses A variadic array of classes to mixin
+        */
+        function mixin
+            (...baseClasses: any[]): (constructor: __Mixins_private__.Constructor<unknown>) => void;
+        /**
+         * Applies the variadic set of base classes to the decorated class
+         * 
+         * (Does not enforce any contracts for implementing the provided base classes. See 'tmixin' for type support)
          * @param inheritAll Whether to mixin the base classes' entire prototype chains or just the base class(es)
          * @param baseClasses A variadic array of classes to mixin
         */
-        const mixin:
-            (inheritAll: boolean, ...baseClasses: any[]) => (constructor: __Mixins_private__.Constructor<unknown>) => void;
+        function mixin
+            (inheritAll: boolean, ...baseClasses: any[]): (constructor: __Mixins_private__.Constructor<unknown>) => void;
 
-            
+        
+        /** Applies the variadic set of base classes to the decorated class, 
+         * and enforces the class' contract in the type system. 
+         * 
+         * Supports up to 7 typed base classes.
+         * 
+         * For abstract class support, pass the abstract class as a constructor (See below example)
+         * @param baseClass A base class to mixin
+         * @param baseClasses A variadic array of classes to mixin
+         * @example
+         * ``` typescript
+         * abstract class A<T> {}
+         * 
+         * tmixin(false, A as new () => A<never>)
+         * class AA {}
+         * ```
+        */
+        function tmixin
+            <T extends __Mixins_private__._ctor_ = __Mixins_private__._, U extends __Mixins_private__._ctor_  = __Mixins_private__._, 
+            V extends __Mixins_private__._ctor_  = __Mixins_private__._, W extends __Mixins_private__._ctor_  = __Mixins_private__._, 
+            X extends __Mixins_private__._ctor_  = __Mixins_private__._, Y extends __Mixins_private__._ctor_  = __Mixins_private__._, 
+            Z extends __Mixins_private__._ctor_  = __Mixins_private__._>
+            (baseClass: __Mixins_private__.MixinSingleArg<T>, ...baseClasses: __Mixins_private__.MixinArgs<U, V, W, X, Y, Z, undefined> | []):
+                <J extends __Mixins_private__.MixinParsedArgsKeys<T, U, V, W, X, Y, Z>>(constructor: J) => void;
         /** Applies the variadic set of base classes to the decorated class, 
          * and enforces the class' contract in the type system. 
          * 
@@ -79,17 +111,17 @@ declare global {
          * ``` typescript
          * abstract class A<T> {}
          * 
-         * ＠tmixin(false, A as new () => A<never>)
+         * tmixin(false, A as new () => A<never>)
          * class AA {}
          * ```
         */
-        const tmixin:
+        function tmixin
             <T extends __Mixins_private__._ctor_ = __Mixins_private__._, U extends __Mixins_private__._ctor_  = __Mixins_private__._, 
             V extends __Mixins_private__._ctor_  = __Mixins_private__._, W extends __Mixins_private__._ctor_  = __Mixins_private__._, 
             X extends __Mixins_private__._ctor_  = __Mixins_private__._, Y extends __Mixins_private__._ctor_  = __Mixins_private__._, 
             Z extends __Mixins_private__._ctor_  = __Mixins_private__._>
-            (inheritAll: boolean, ...baseClasses: __Mixins_private__.MixinArgs<T, U, V, W, X, Y, Z>) => 
+            (inheritAll: boolean, ...baseClasses: __Mixins_private__.MixinArgs<T, U, V, W, X, Y, Z>):
                 <J extends __Mixins_private__.MixinParsedArgsKeys<T, U, V, W, X, Y, Z>>(constructor: J) => void;
-    }
 
+    }
 }

@@ -55,6 +55,7 @@ namespace Mixins { //Begin Namespace
         : t7<cc<T>, cc<U>, cc<V>, cc<W>, cc<X>, cc<Y>, cc<Z>>
     : [...R];
 
+    type MixinSingleArg<T> = cc<T>;
     type MixinArgs<T, U, V, W, X, Y, Z> = c<cc<T>, cc<U>, cc<V>, cc<W>, cc<X>, cc<Y>, cc<Z>>;
     type MixinArgsParsed<T, U, V, W, X, Y, Z, R extends MixinArgs<T, U, V, W, X, Y, Z>> 
         = d<T, U, V, W, X, Y, Z, R, R['length']>;
@@ -76,14 +77,21 @@ namespace Mixins { //Begin Namespace
     // ++ ANCHOR Namespace Exports
     //---------------------------------------------------------------------------------------------------------------
 
-    export declare const mixin:
-        (inheritAll: boolean, ...baseClasses: any[]) => (constructor: Constructor<unknown>) => void;
+    export declare function mixin
+        (...baseClasses: any[]): (constructor: Constructor<unknown>) => void;
+    export declare function mixin
+        (inheritAll: boolean, ...baseClasses: any[]): (constructor: Constructor<unknown>) => void;
 
 
-    export declare const tmixin:
+    export declare function tmixin
         <T extends _ctor_ = _, U extends _ctor_  = _, V extends _ctor_  = _, 
         W extends _ctor_  = _, X extends _ctor_  = _, Y extends _ctor_  = _, Z extends _ctor_  = _>
-        (inheritAll: boolean, ...baseClasses: MixinArgs<T, U, V, W, X, Y, Z>) => 
+        (baseClass: MixinSingleArg<T>, ...baseClasses: MixinArgs<U, V, W, X, Y, Z, undefined>):
+            <J extends MixinParsedArgsKeys<T, U, V, W, X, Y, Z>>(constructor: J) => void;
+    export declare function tmixin
+        <T extends _ctor_ = _, U extends _ctor_  = _, V extends _ctor_  = _, 
+        W extends _ctor_  = _, X extends _ctor_  = _, Y extends _ctor_  = _, Z extends _ctor_  = _>
+        (inheritAll: boolean, ...baseClasses: MixinArgs<T, U, V, W, X, Y, Z>):
             <J extends MixinParsedArgsKeys<T, U, V, W, X, Y, Z>>(constructor: J) => void;
 
     //---------------------------------------------------------------------------------------------------------------
@@ -164,11 +172,20 @@ namespace Mixins { //Begin Namespace
      * Applies the variadic set of base classes to the decorated class
      * 
      * (Does not enforce any contracts for implementing the provided base classes. See 'tmixin' for type support)
+     * @param baseClasses A variadic array of classes to mixin
+    */
+    function mixin (...baseClasses: any[]);
+    /**
+     * Applies the variadic set of base classes to the decorated class
+     * 
+     * (Does not enforce any contracts for implementing the provided base classes. See 'tmixin' for type support)
      * @param inheritAll Whether to mixin the base classes' entire prototype chains or just the base class(es)
      * @param baseClasses A variadic array of classes to mixin
     */
-    const mixin = (inheritAll: boolean, ...baseClasses: any[]) => {
-        return !inheritAll ?
+    function mixin (inheritAll: boolean, ...baseClasses: any[]) {
+        const __inheritAll__ = typeof inheritAll === 'boolean' ? inheritAll : false;
+        if (typeof inheritAll === 'function') baseClasses.unshift(inheritAll);
+        return !__inheritAll__ ?
             ((constructor: Constructor<unknown>) => {
                 __applyMixins__(constructor, baseClasses);
             })
@@ -207,6 +224,26 @@ namespace Mixins { //Begin Namespace
      * Supports up to 7 typed base classes.
      * 
      * For abstract class support, pass the abstract class as a constructor (See below example)
+     * @param baseClass A base class to mixin
+     * @param baseClasses A variadic array of classes to mixin
+     * @example
+     * ``` typescript
+     * abstract class A<T> {}
+     * 
+     * tmixin(false, A as new () => A<never>)
+     * class AA {}
+     * ```
+    */
+    function tmixin 
+    <T extends _ctor_ = _, U extends _ctor_  = _, V extends _ctor_  = _, 
+    W extends _ctor_  = _, X extends _ctor_  = _, Y extends _ctor_  = _, Z extends _ctor_  = _>
+    (baseClass: MixinSingleArg<T>, ...baseClasses: MixinArgs<U, V, W, X, Y, Z, undefined> | []);
+    /** Applies the variadic set of base classes to the decorated class, 
+     * and enforces the class' contract in the type system. 
+     * 
+     * Supports up to 7 typed base classes.
+     * 
+     * For abstract class support, pass the abstract class as a constructor (See below example)
      * @param inheritAll Whether to mixin the base classes' entire prototype chains or just the base class(es)
      * @param baseClasses A variadic array of classes to mixin
      * @example
@@ -217,12 +254,35 @@ namespace Mixins { //Begin Namespace
      * class AA {}
      * ```
     */
-    const tmixin = 
+    function tmixin 
     <T extends _ctor_ = _, U extends _ctor_  = _, V extends _ctor_  = _, 
     W extends _ctor_  = _, X extends _ctor_  = _, Y extends _ctor_  = _, Z extends _ctor_  = _>
-    (inheritAll: boolean, ...baseClasses: MixinArgs<T, U, V, W, X, Y, Z>) => {
-        let args = baseClasses as MixinArgsParsed<T, U, V, W, X, Y, Z, typeof baseClasses>;
-        return !inheritAll ?
+    (inheritAll: boolean, ...baseClasses: MixinArgs<T, U, V, W, X, Y, Z>);
+    /** Applies the variadic set of base classes to the decorated class, 
+     * and enforces the class' contract in the type system. 
+     * 
+     * Supports up to 7 typed base classes.
+     * 
+     * For abstract class support, pass the abstract class as a constructor (See below example)
+     * @param inheritAll Whether to mixin the base classes' entire prototype chains or just the base class(es)
+     * @param baseClasses A variadic array of classes to mixin
+     * @example
+     * ``` typescript
+     * abstract class A<T> {}
+     * 
+     * tmixin(false, A as new () => A<never>)
+     * class AA {}
+     * ```
+    */
+    function tmixin 
+    <T extends _ctor_ = _, U extends _ctor_  = _, V extends _ctor_  = _, 
+    W extends _ctor_  = _, X extends _ctor_  = _, Y extends _ctor_  = _, Z extends _ctor_  = _>
+    (inheritAll: boolean | MixinSingleArg<T>, ...baseClasses: MixinArgs<T, U, V, W, X, Y, Z>) {
+        const __inheritAll__ = typeof inheritAll === 'boolean' ? inheritAll : false;
+        if (typeof inheritAll === 'function') baseClasses.unshift(inheritAll);
+
+        const args = baseClasses as MixinArgsParsed<T, U, V, W, X, Y, Z, typeof baseClasses>;
+        return !__inheritAll__ ?
             ( <J extends MixinParsedArgsKeys<T, U, V, W, X, Y, Z>>(constructor: J) => {
                 __applyMixins__(constructor, args);
             })
