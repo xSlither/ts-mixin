@@ -7,7 +7,7 @@
 Installing `ts-mixin` is really simple. First install the npm package and `reflect-metadata` into your project:
 
 ```batchfile
-npm i ts-tmixin reflect-metadata 
+npm i typescript-mixin reflect-metadata 
 ```
 
 Next, you just need to configure your `tsconfig.json` to enable experimental decorators and decorator metadata:
@@ -33,7 +33,7 @@ If you are not familiar with multiple-inheritance, I recommend taking a look at 
 Let's take a look at a basic example where we want to mixin a couple classes into an existing child class that we will inherit from. This example also points out some of the limitations that exist regarding access to constructors, and how properties are set:
 
 ```typescript
-import 'ts-mixin';
+import 'typescript-mixin';
 
 class Animal {
     species: string;
@@ -96,7 +96,7 @@ Also, note the interface defined for 'Employee'. This declaration allows TypeScr
  
 The decorators also have an additional overload that allows for a boolean argument to be passed in front of the variadic array of classes, which is assumed as False by default. If the flag is provided, then the entire inheritance tree is also mixed-in with the implementing class. Here is an example:
 ```typescript
-import 'ts-mixin';
+import 'typescript-mixin';
 
 class Animal {
   species: string;

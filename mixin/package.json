@@ -1,6 +1,6 @@
 {
-  "name": "ts-mixin",
-  "version": "1.0.0",
+  "name": "typescript-mixin",
+  "version": "1.0.3",
   "description": "Mixin Classes for TypeScript",
   "main": "ts-mixin.js",
   "types": "index.d.ts",
