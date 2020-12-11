@@ -7,7 +7,7 @@
 Installing `ts-mixin` is really simple. First install the npm package and `reflect-metadata` into your project:
 
 ```batchfile
-npm i ts-mixin reflect-metadata 
+npm i ts-tmixin reflect-metadata 
 ```
 
 Next, you just need to configure your `tsconfig.json` to enable experimental decorators and decorator metadata:
